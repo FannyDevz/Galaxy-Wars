@@ -1,7 +1,6 @@
 extends Area2D
 
 const PELURU = preload("res://source/Follow Mouse/peluru.tscn")
-#@onready var angka: Label = $"../Angka"
 signal musuh_mati(poin)
 const poin = 1
 @export var health:int = 2
@@ -31,9 +30,6 @@ func _on_area_entered(area: Area2D) -> void:
 		area.queue_free()
 	
 	if health <= 0:
-		#var intHS = int(angka.text)
-		#intHS += 1
-		#angka.text = str(intHS)
 		emit_signal("musuh_mati", poin)
 		
 		queue_free()

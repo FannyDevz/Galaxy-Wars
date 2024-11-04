@@ -3,11 +3,13 @@ extends CharacterBody2D
 const PELURU = preload("res://source/Follow Mouse/peluru.tscn")
 const MAIN_MENU = preload("res://source/Main Menu/Main Menu.tscn")
 
-@export var darah:int = 3
-const speed:int = 1000
-var darahSaatIni:int = darah
 signal healthPlayerSignal(darah:int, darahSaatIni:int)
 signal playerMati(isTrue:bool)
+
+@export var darah:int = 3
+@export var speed:int = 1000
+
+var darahSaatIni:int = darah
 
 var isHoldLeft = false
 var isHoldRight = false
@@ -31,8 +33,8 @@ func _process(delta: float) -> void:
 		position -= Vector2(0,1) * speed * delta
 	if isHoldDown:
 		position += Vector2(0,1) * speed * delta
-	
-func tembak():
+
+func tembak() -> void:
 	var peluru = PELURU.instantiate()
 	peluru.position = self.position
 	peluru.add_to_group('peluru-pemain')
@@ -50,24 +52,9 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 		area.queue_free()
 	
 	if darahSaatIni <= 0:
-		#if HS.score < int($"../Angka".text):
-			#HS.score = int($"../Angka".text)
 		emit_signal('playerMati', true)
 		
 		get_tree().call_deferred('change_scene_to_packed', MAIN_MENU)
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 func _on_left_pressed() -> void:
 	isHoldLeft = true
